@@ -15,10 +15,13 @@ public class GameScreen extends AbstractScreen {
     }
 
     @Override
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height, false);
+    }
+
+    @Override
     protected void update(float delta) {
-        // delta = 1f / 60;
         gameWorld.update(delta);
-        camera.translate(0, gameWorld.speedY * delta);
         super.update(delta);
     }
 

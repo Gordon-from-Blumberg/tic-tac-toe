@@ -6,10 +6,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.gordonfromblumberg.game_template.factory.AbstractFactory;
+import com.gordonfromblumberg.game_template.utils.ConfigManager;
 
 public abstract class AbstractScreen implements Screen {
+    private static final float MIN_DELTA = 1.0f / 30;
 
     protected Stage stage;
     protected SpriteBatch batch;
@@ -23,7 +26,7 @@ public abstract class AbstractScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        viewport = new FitViewport(600, 800, camera);
+        viewport = createViewport();
         stage = new Stage(viewport, batch);
         Gdx.input.setInputProcessor(stage);
     }
@@ -32,7 +35,7 @@ public abstract class AbstractScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0.1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        delta = Math.min(delta, MIN_DELTA);
         update(delta);
 
         batch.begin();
@@ -44,7 +47,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, false);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -70,6 +73,17 @@ public abstract class AbstractScreen implements Screen {
     protected void renderUi() {
         stage.act();
         stage.draw();
+    }
+
+    private Viewport createViewport() {
+        ConfigManager configManager = AbstractFactory.instance.configManager();
+        float worldWidth = configManager.getFloat("worldWidth");
+        float minRatio = configManager.getFloat("minRatio");
+        float maxRatio = configManager.getFloat("maxRatio");
+        return new ExtendViewport(
+                worldWidth, worldWidth / maxRatio,
+                worldWidth, worldWidth / minRatio,
+                camera);
     }
 
     @Override

@@ -98,8 +98,8 @@ public class GameWorld implements Disposable {
     }
 
     public void gameOver() {
-        AbstractScreen screen = Main.INSTANCE.getCurrentScreen();
-        Main.INSTANCE.goToMainMenu();
+        AbstractScreen screen = Main.getInstance().getCurrentScreen();
+        Main.getInstance().goToMainMenu();
         screen.dispose();
     }
 

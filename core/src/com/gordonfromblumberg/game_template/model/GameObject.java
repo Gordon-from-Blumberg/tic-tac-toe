@@ -25,8 +25,8 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
     protected final Vector2 targetMovement = new Vector2();
     protected final Vector2 targetVelocity = new Vector2();
 
-    protected float velocityMax = 1000;
-    protected float accelerationMax = 1000;
+    protected float maxVelocity = 1000;
+    protected float maxAcceleration = 1000;
     protected float decelerationDistance2;
 
     protected GameWorld gameWorld;
@@ -46,9 +46,8 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
         positionDelta.set(velocity.x * halfDelta, velocity.y * halfDelta);
 
         updateAcceleration(delta);
+
         updateVelocity(delta);
-//        velocity.x = MathUtils.clamp(velocity.x, -velocityMax, velocityMax);
-//        velocity.y = MathUtils.clamp(velocity.y, -velocityMax, velocityMax);
 
 
         positionDelta.mulAdd(velocity, halfDelta);
@@ -86,7 +85,7 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
 
     protected void updateVelocity(float delta) {
         velocity.mulAdd(acceleration, delta)
-                .limit(velocityMax);
+                .limit(maxVelocity);
 
     }
 
@@ -107,25 +106,25 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
     }
 
     protected void decelerate() {
-        if (targetMovement.len2() < decelerationDistance2) {
+        if (!targetMovement.isZero() && targetMovement.len2() < decelerationDistance2) {
             if (MathHelper.isSameSign(targetMovement.x, velocity.x)
-                    && velocity.x * velocity.x >= 1.8 * accelerationMax * Math.abs(targetMovement.x)) {
+                    && velocity.x * velocity.x >= 2 * maxAcceleration * Math.abs(targetMovement.x)) {
                 acceleration.x = - (velocity.x * velocity.x) / (2 * targetMovement.x);
             }
             if (MathHelper.isSameSign(targetMovement.y, velocity.y)
-                    && velocity.y * velocity.y >= 1.8 * accelerationMax * Math.abs(targetMovement.y)) {
+                    && velocity.y * velocity.y >= 2 * maxAcceleration * Math.abs(targetMovement.y)) {
                 acceleration.y = - (velocity.y * velocity.y) / (2 * targetMovement.y);
             }
 
-            acceleration.limit(accelerationMax);
+            acceleration.limit(maxAcceleration);
         } else {
-            acceleration.setLength(accelerationMax);
+            acceleration.setLength(maxAcceleration);
         }
     }
 
     protected void setVelocityAccelerationLimits(float velocityMax, float accelerationMax) {
-        this.velocityMax = velocityMax;
-        this.accelerationMax = accelerationMax;
+        this.maxVelocity = velocityMax;
+        this.maxAcceleration = accelerationMax;
         this.decelerationDistance2 = velocityMax * velocityMax / (2 * accelerationMax);
         this.decelerationDistance2 *= decelerationDistance2;
     }
