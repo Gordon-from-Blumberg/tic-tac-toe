@@ -44,8 +44,8 @@ public class HtmlLauncher extends GwtApplication {
         // }
         // END OF CODE FOR RESIZABLE APPLICATION
 
-        @Override
+        @Override //todo: use Main.create(factory)
         public ApplicationListener createApplicationListener () {
-                return Main.createInstance();
+                return Main.getInstance();
         }
 }

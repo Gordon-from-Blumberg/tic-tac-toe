@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.gordonfromblumberg.game_template.Main;
+import com.gordonfromblumberg.game_template.android.factory.AndroidFactory;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
@@ -13,6 +13,6 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useAccelerometer = false;
 		config.useCompass = false;
-		initialize(Main.createInstance(), config);
+		initialize(Main.create(new AndroidFactory()), config);
 	}
 }

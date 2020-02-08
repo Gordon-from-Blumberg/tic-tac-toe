@@ -2,7 +2,7 @@ apply plugin: "java"
 
 sourceCompatibility = 1.7
 sourceSets.main.java.srcDirs = [ "src/" ]
-sourceSets.main.resources.srcDirs = ["../android/assets"]
+sourceSets.main.resources.srcDirs = ["../android/assets", "assets"]
 
 project.ext.mainClassName = "com.gordonfromblumberg.game_template.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../android/assets")
@@ -34,5 +34,11 @@ task dist(type: Jar) {
     with jar
 }
 
+task copyConfig(type: Copy) {
+    from 'assets'
+    into '../android/assets'
+}
+
 
 dist.dependsOn classes
+dist.dependsOn copyConfig

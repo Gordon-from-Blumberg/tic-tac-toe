@@ -8,7 +8,7 @@ android {
             aidl.srcDirs = ['src']
             renderscript.srcDirs = ['src']
             res.srcDirs = ['res']
-            assets.srcDirs = ['assets']
+            assets.srcDirs = ['assets', 'config']
             jniLibs.srcDirs = ['libs']
         }
 
@@ -88,3 +88,11 @@ task run(type: Exec) {
     def adb = path + "/platform-tools/adb"
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.gordonfromblumberg.game_template/com.gordonfromblumberg.game_template.AndroidLauncher'
 }
+
+task copyConfig(type: Copy) {
+    from 'config'
+    into 'assets/config'
+}
+
+run.dependsOn copyConfig
+build.dependsOn copyConfig
