@@ -2,7 +2,6 @@ package com.gordonfromblumberg.game_template.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -31,7 +30,6 @@ public class GameWorld implements Disposable {
         this.viewport = viewport;
         visibleArea = new Rectangle(0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         tree = new BSPTree(0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
-
     }
 
     public void addGameObject(GameObject gameObject) {

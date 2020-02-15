@@ -1,8 +1,8 @@
 package com.gordonfromblumberg.game_template.model;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -10,31 +10,33 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 
+import com.gordonfromblumberg.game_template.Main;
 import com.gordonfromblumberg.game_template.utils.MathHelper;
 
 public abstract class GameObject implements Disposable, Pool.Poolable {
 
+    public GameWorld gameWorld;
+
     protected final Sprite sprite = new Sprite();
-    protected final Polygon polygon = new Polygon(new float[8]);
+    public final Polygon polygon = new Polygon(new float[8]);
 
     protected final Vector2 positionDelta = new Vector2();
     protected final Vector2 velocity = new Vector2();
-    protected final Vector2 acceleration = new Vector2();
+    public final Vector2 acceleration = new Vector2();
 
-    protected final Vector3 targetPosition = new Vector3();
-    protected final Vector2 targetMovement = new Vector2();
+    public final Vector3 targetPosition = new Vector3();
+    public final Vector2 targetMovement = new Vector2();
     protected final Vector2 targetVelocity = new Vector2();
 
-    protected float maxVelocity = 1000;
-    protected float maxAcceleration = 1000;
+    public float maxVelocity = 1000;
+    public float maxAcceleration = 1000;
     protected float decelerationDistance2;
 
-    protected GameWorld gameWorld;
     protected Pool<GameObject> pool;
     protected boolean active = false;
 
     public GameObject(String textureName) {
-        setTexture(new Texture(textureName));
+        sprite.setRegion( getTextureAtlas().findRegion(textureName) );
     }
 
     public GameObject(Pool<GameObject> pool) {
@@ -48,7 +50,6 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
         updateAcceleration(delta);
 
         updateVelocity(delta);
-
 
         positionDelta.mulAdd(velocity, halfDelta);
         polygon.translate(positionDelta.x, positionDelta.y);
@@ -70,12 +71,6 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
         this.gameWorld = gameWorld;
     }
 
-    public void setTexture(Texture texture) {
-        sprite.setTexture(texture);
-        sprite.setRegion(0, 0, texture.getWidth(), texture.getHeight());
-        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-    }
-
     public abstract Rectangle getBoundingRectangle();
 
     public abstract boolean checkCollision(GameObject gameObject);
@@ -86,7 +81,6 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
     protected void updateVelocity(float delta) {
         velocity.mulAdd(acceleration, delta)
                 .limit(maxVelocity);
-
     }
 
     /**
@@ -105,6 +99,7 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
         updatePosition();
     }
 
+    @Deprecated
     protected void decelerate() {
         if (!targetMovement.isZero() && targetMovement.len2() < decelerationDistance2) {
             if (MathHelper.isSameSign(targetMovement.x, velocity.x)
@@ -122,10 +117,10 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
         }
     }
 
-    protected void setVelocityAccelerationLimits(float velocityMax, float accelerationMax) {
-        this.maxVelocity = velocityMax;
-        this.maxAcceleration = accelerationMax;
-        this.decelerationDistance2 = velocityMax * velocityMax / (2 * accelerationMax);
+    protected void setVelocityAccelerationLimits(float maxVelocity, float maxAcceleration) {
+        this.maxVelocity = maxVelocity;
+        this.maxAcceleration = maxAcceleration;
+        this.decelerationDistance2 = maxVelocity * maxVelocity / (2 * maxAcceleration);
         this.decelerationDistance2 *= decelerationDistance2;
     }
 
@@ -139,6 +134,10 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
         vertices[5] = height / 2;
         vertices[6] = - width / 2;
         vertices[7] = height / 2;
+    }
+
+    protected TextureAtlas getTextureAtlas() {
+        return Main.getInstance().assets().get("image/texture_pack.atlas", TextureAtlas.class);
     }
 
     @Override

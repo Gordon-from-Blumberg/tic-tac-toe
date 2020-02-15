@@ -1,6 +1,5 @@
 package com.gordonfromblumberg.game_template.screens;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.gordonfromblumberg.game_template.model.GameWorld;
 
 public class GameScreen extends AbstractScreen {

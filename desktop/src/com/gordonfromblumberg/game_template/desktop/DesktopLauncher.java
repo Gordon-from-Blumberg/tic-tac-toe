@@ -13,6 +13,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 //		config.foregroundFPS = 0;
 //		config.vSyncEnabled = false;
+		config.title = "Space shooter";
 		config.width = configManager.getInteger("screenWidth");
 		config.height = configManager.getInteger("screenHeight");
 		new LwjglApplication(Main.create(factory), config);
