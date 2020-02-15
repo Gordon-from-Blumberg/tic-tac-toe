@@ -1,8 +1,8 @@
-package com.gordonfromblumberg.game_template.utils;
+package com.gordonfromblumberg.games.common.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.gordonfromblumberg.game_template.Main;
+import com.gordonfromblumberg.games.common.Main;
 
 import java.io.IOException;
 import java.io.Reader;

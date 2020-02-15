@@ -1,4 +1,4 @@
-package com.gordonfromblumberg.game_template.screens;
+package com.gordonfromblumberg.games.common.screens;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.gordonfromblumberg.game_template.Main;
+import com.gordonfromblumberg.games.common.Main;
 
 public class MainMenuScreen extends AbstractScreen {
 
@@ -21,7 +21,7 @@ public class MainMenuScreen extends AbstractScreen {
         super.show();
 
         final AssetManager assetManager = Main.getInstance().assets();
-        background = assetManager.get("image/texture_pack.atlas", TextureAtlas.class).findRegion("");
+        background = assetManager.get("image/texture_pack.atlas", TextureAtlas.class).findRegion("//todo");//todo
         rootTable = new Table();
         rootTable.setFillParent(true);
         stage.addActor(rootTable);

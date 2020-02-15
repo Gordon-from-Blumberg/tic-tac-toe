@@ -1,6 +1,6 @@
-package com.gordonfromblumberg.game_template.desktop.utils;
+package com.gordonfromblumberg.games.space_shooter.utils;
 
-import com.gordonfromblumberg.game_template.utils.ConfigManager;
+import com.gordonfromblumberg.games.common.utils.ConfigManager;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

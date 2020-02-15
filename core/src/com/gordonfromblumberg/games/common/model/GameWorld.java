@@ -1,4 +1,4 @@
-package com.gordonfromblumberg.game_template.model;
+package com.gordonfromblumberg.games.common.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -8,9 +8,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.gordonfromblumberg.game_template.Main;
-import com.gordonfromblumberg.game_template.screens.AbstractScreen;
-import com.gordonfromblumberg.game_template.utils.BSPTree;
+
+import com.gordonfromblumberg.games.common.Main;
+import com.gordonfromblumberg.games.common.screens.AbstractScreen;
+import com.gordonfromblumberg.games.common.utils.BSPTree;
 
 import java.util.Iterator;
 

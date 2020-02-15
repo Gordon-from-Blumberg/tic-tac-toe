@@ -1,10 +1,9 @@
-package com.gordonfromblumberg.game_template.desktop;
+package com.gordonfromblumberg.games.common;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.gordonfromblumberg.game_template.Main;
-import com.gordonfromblumberg.game_template.desktop.factory.DesktopFactory;
-import com.gordonfromblumberg.game_template.utils.ConfigManager;
+import com.gordonfromblumberg.games.common.factory.DesktopFactory;
+import com.gordonfromblumberg.games.common.utils.ConfigManager;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

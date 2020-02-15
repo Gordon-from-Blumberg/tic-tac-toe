@@ -1,9 +1,9 @@
-package com.gordonfromblumberg.game_template.client;
+package com.gordonfromblumberg.games.common.client;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.gordonfromblumberg.game_template.Main;
+import com.gordonfromblumberg.games.common.Main;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -44,7 +44,7 @@ public class HtmlLauncher extends GwtApplication {
         // }
         // END OF CODE FOR RESIZABLE APPLICATION
 
-        @Override //todo: use Main.create(factory)
+        @Override
         public ApplicationListener createApplicationListener () {
                 return Main.getInstance();
         }

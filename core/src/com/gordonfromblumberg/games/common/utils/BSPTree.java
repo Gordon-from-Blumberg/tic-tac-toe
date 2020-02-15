@@ -1,11 +1,12 @@
-package com.gordonfromblumberg.game_template.utils;
+package com.gordonfromblumberg.games.common.utils;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.gordonfromblumberg.game_template.model.GameObject;
+import com.gordonfromblumberg.games.common.model.GameObject;
 
 import java.util.Iterator;
 
+//todo adjust bounds after resize
 public class BSPTree implements Iterator<Iterator<GameObject>> {
 
     private int maxLevel = 3;

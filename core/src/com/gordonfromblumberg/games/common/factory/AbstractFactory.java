@@ -1,6 +1,6 @@
-package com.gordonfromblumberg.game_template.factory;
+package com.gordonfromblumberg.games.common.factory;
 
-import com.gordonfromblumberg.game_template.utils.ConfigManager;
+import com.gordonfromblumberg.games.common.utils.ConfigManager;
 
 public abstract class AbstractFactory {
     public static AbstractFactory instance;

@@ -1,8 +1,9 @@
-package com.gordonfromblumberg.game_template.model;
+package com.gordonfromblumberg.games.common.model;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -10,8 +11,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 
-import com.gordonfromblumberg.game_template.Main;
-import com.gordonfromblumberg.game_template.utils.MathHelper;
+import com.gordonfromblumberg.games.common.Main;
+import com.gordonfromblumberg.games.common.utils.MathHelper;
 
 public abstract class GameObject implements Disposable, Pool.Poolable {
 
@@ -21,7 +22,7 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
     public final Polygon polygon = new Polygon(new float[8]);
 
     protected final Vector2 positionDelta = new Vector2();
-    protected final Vector2 velocity = new Vector2();
+    public final Vector2 velocity = new Vector2();
     public final Vector2 acceleration = new Vector2();
 
     public final Vector3 targetPosition = new Vector3();
@@ -77,7 +78,6 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
     public void collide(GameObject gameObject) {}
 
     protected void updateAcceleration(float delta) {}
-
     protected void updateVelocity(float delta) {
         velocity.mulAdd(acceleration, delta)
                 .limit(maxVelocity);
@@ -124,7 +124,7 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
         this.decelerationDistance2 *= decelerationDistance2;
     }
 
-    protected void setSize(float width, float height) {
+    public void setSize(float width, float height) {
         final float[] vertices = polygon.getVertices();
         vertices[0] = - width / 2;
         vertices[1] = - height / 2;
@@ -138,6 +138,10 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
 
     protected TextureAtlas getTextureAtlas() {
         return Main.getInstance().assets().get("image/texture_pack.atlas", TextureAtlas.class);
+    }
+
+    public void setRegion(TextureRegion region) {
+        sprite.setRegion(region);
     }
 
     @Override

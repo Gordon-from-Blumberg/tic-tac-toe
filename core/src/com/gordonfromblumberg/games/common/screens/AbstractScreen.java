@@ -1,4 +1,4 @@
-package com.gordonfromblumberg.game_template.screens;
+package com.gordonfromblumberg.games.common.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -8,10 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.gordonfromblumberg.game_template.factory.AbstractFactory;
-import com.gordonfromblumberg.game_template.utils.ConfigManager;
+import com.gordonfromblumberg.games.common.factory.AbstractFactory;
+import com.gordonfromblumberg.games.common.utils.ConfigManager;
 
 public abstract class AbstractScreen implements Screen {
+
     private static final float MIN_DELTA = 1.0f / 30;
 
     protected Stage stage;
@@ -37,7 +38,7 @@ public abstract class AbstractScreen implements Screen {
 
         Gdx.gl.glClearColor(0, 0, 0.1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        delta = Math.min(delta, MIN_DELTA);
+
         update(delta);
 
         batch.begin();

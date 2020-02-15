@@ -1,12 +1,12 @@
-package com.gordonfromblumberg.game_template;
+package com.gordonfromblumberg.games.common;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.gordonfromblumberg.game_template.factory.AbstractFactory;
-import com.gordonfromblumberg.game_template.screens.AbstractScreen;
-import com.gordonfromblumberg.game_template.screens.MainMenuScreen;
+import com.gordonfromblumberg.games.common.factory.AbstractFactory;
+import com.gordonfromblumberg.games.common.screens.AbstractScreen;
+import com.gordonfromblumberg.games.common.screens.MainMenuScreen;
 
 public class Main extends Game {
 	private static Main instance;
@@ -34,6 +34,7 @@ public class Main extends Game {
 	
 	@Override
 	public void create() {
+	    assetManager.load("image/texture_pack.atlas", TextureAtlas.class);
 		loadUiAssets();
 
 		setScreen(mainMenuScreen);

@@ -1,10 +1,11 @@
-package com.gordonfromblumberg.game_template;
+package com.gordonfromblumberg.games.game_template;
 
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.gordonfromblumberg.game_template.android.factory.AndroidFactory;
+import com.gordonfromblumberg.games.common.Main;
+import com.gordonfromblumberg.games.common.factory.AndroidFactory;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override

@@ -1,4 +1,4 @@
-package com.gordonfromblumberg.game_template.utils;
+package com.gordonfromblumberg.games.common.utils;
 
 import com.badlogic.gdx.math.MathUtils;
 
