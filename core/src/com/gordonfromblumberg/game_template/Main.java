@@ -11,7 +11,7 @@ import com.gordonfromblumberg.game_template.screens.MainMenuScreen;
 public class Main extends Game {
 	private static Main instance;
 
-	public static final String NAME = "space_shooter";
+	public static final String NAME = "game_template";
 
 	private final AssetManager assetManager;
 	private final AbstractFactory factory;
