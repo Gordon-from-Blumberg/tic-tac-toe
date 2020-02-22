@@ -37,6 +37,8 @@ public class Main extends Game {
 	    assetManager.load("image/texture_pack.atlas", TextureAtlas.class);
 		loadUiAssets();
 
+		assetManager.finishLoading();
+
 		setScreen(mainMenuScreen);
 	}
 
@@ -55,7 +57,6 @@ public class Main extends Game {
 	private void loadUiAssets() {
 		assetManager.load("ui/uiskin.atlas", TextureAtlas.class);
 		assetManager.load("ui/uiskin.json", Skin.class);
-		assetManager.finishLoading();
 	}
 
 	@Override
