@@ -36,11 +36,13 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
     protected Pool<GameObject> pool;
     protected boolean active = false;
 
-    public GameObject(String textureName) {
+    protected GameObject() {}
+
+    protected GameObject(String textureName) {
         sprite.setRegion( getTextureAtlas().findRegion(textureName) );
     }
 
-    public GameObject(Pool<GameObject> pool) {
+    protected GameObject(Pool<GameObject> pool) {
         this.pool = pool;
     }
 
@@ -154,6 +156,6 @@ public abstract class GameObject implements Disposable, Pool.Poolable {
 
     @Override
     public void dispose() {
-        sprite.getTexture().dispose();
+
     }
 }
