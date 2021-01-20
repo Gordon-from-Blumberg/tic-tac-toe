@@ -28,6 +28,7 @@ public class GameWorld implements Disposable {
     private int maxCount = 0;
 
     private float time = 0;
+    private int score = 0;
 
     public GameWorld(Viewport viewport) {
         this.viewport = viewport;
@@ -103,6 +104,10 @@ public class GameWorld implements Disposable {
         AbstractScreen screen = Main.getInstance().getCurrentScreen();
         Main.getInstance().goToMainMenu();
         screen.dispose();
+    }
+
+    public int getScore() {
+        return score;
     }
 
     private void detectCollisions() {

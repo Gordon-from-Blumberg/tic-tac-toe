@@ -1,13 +1,16 @@
 package com.gordonfromblumberg.games.common.screens;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.gordonfromblumberg.games.common.factory.AbstractFactory;
 import com.gordonfromblumberg.games.common.model.GameWorld;
 import com.gordonfromblumberg.games.common.utils.ConfigManager;
 
 public class GameScreen extends AbstractScreen {
+    private static final String SCORE_LABEL = "SCORE";
 
+    private Label scoreLabel;
     private GameWorld gameWorld;
 
     protected GameScreen(SpriteBatch batch) {
@@ -42,6 +45,12 @@ public class GameScreen extends AbstractScreen {
     }
 
     @Override
+    protected void renderUi() {
+        scoreLabel.setText(getScore());
+        super.renderUi();
+    }
+
+    @Override
     public void dispose() {
         gameWorld.dispose();
 
@@ -52,6 +61,13 @@ public class GameScreen extends AbstractScreen {
         final ConfigManager configManager = AbstractFactory.instance.configManager();
         final Skin uiSkin = assets.get("ui/uiskin.json", Skin.class);
 
+        scoreLabel = new Label(getScore(), uiSkin);
+        uiRootTable.add(scoreLabel).left();
+
         // create ui here
+    }
+
+    private String getScore() {
+        return String.format("%s: %06d", SCORE_LABEL, gameWorld.getScore());
     }
 }
