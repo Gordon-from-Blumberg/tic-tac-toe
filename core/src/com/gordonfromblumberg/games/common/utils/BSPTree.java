@@ -49,6 +49,10 @@ public class BSPTree implements Iterator<Iterator<GameObject>> {
         root.moveAndClear(x, y);
     }
 
+    int leafCount() {
+        return leafs.size;
+    }
+
     private ObjectIterator iterator(int leafIndex) {
         iterator.setNode(leafs.get(leafIndex));
         iterator.index = 0;
