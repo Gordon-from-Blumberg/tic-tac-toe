@@ -1,6 +1,13 @@
 package com.gordonfromblumberg.games.common.event;
 
-@FunctionalInterface
-public interface EventHandler<T extends Event> {
-    void handle(T event);
+import com.gordonfromblumberg.games.common.utils.Pools;
+
+public abstract class EventHandler<T extends Event> {
+    public void handle(T event) {
+        process(event);
+
+        Pools.free(event);
+    };
+
+    protected abstract void process(T event);
 }

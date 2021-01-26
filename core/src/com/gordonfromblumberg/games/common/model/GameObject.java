@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 
 import com.gordonfromblumberg.games.common.Main;
+import com.gordonfromblumberg.games.common.utils.Pools;
 
 public class GameObject implements Disposable, Pool.Poolable {
     protected static final int X1 = 0;
@@ -33,7 +34,7 @@ public class GameObject implements Disposable, Pool.Poolable {
     protected final Vector2 position = new Vector2();
     protected float width, height;
 
-    protected Pool<GameObject> pool;
+    protected Pool pool = Pools.getPool(getClass());
     protected boolean active = false;
     protected boolean colliding = false;
 
