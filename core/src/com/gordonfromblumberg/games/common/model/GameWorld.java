@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import com.gordonfromblumberg.games.common.Main;
@@ -150,13 +149,6 @@ public class GameWorld implements Disposable {
     public void dispose() {
         for (GameObject gameObject : gameObjects) {
             gameObject.dispose();
-        }
-    }
-
-    private <T extends Disposable> void dispose(Pool<T> pool) {
-        int free = pool.getFree();
-        while (free-- > 0) {
-            pool.obtain().dispose();
         }
     }
 }
