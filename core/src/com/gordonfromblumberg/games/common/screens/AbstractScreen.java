@@ -2,12 +2,15 @@ package com.gordonfromblumberg.games.common.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.gordonfromblumberg.games.common.Main;
 import com.gordonfromblumberg.games.common.factory.AbstractFactory;
 import com.gordonfromblumberg.games.common.utils.ConfigManager;
 
@@ -15,21 +18,36 @@ public abstract class AbstractScreen implements Screen {
 
     private static final float MIN_DELTA = 1.0f / 30;
 
+    protected AssetManager assets;
+
     protected Stage stage;
     protected SpriteBatch batch;
-    protected Viewport viewport;
-    protected OrthographicCamera camera;
+    protected Viewport viewport, uiViewport;
+    protected OrthographicCamera camera, uiCamera;
+
+    protected Table uiRootTable;
 
     @Override
     public void show() {
-        batch = new SpriteBatch();
-        
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        assets = Main.getInstance().assets();
 
-        viewport = createViewport();
-        stage = new Stage(viewport, batch);
+        batch = new SpriteBatch();
+
+        final ConfigManager configManager = AbstractFactory.instance.configManager();
+        final float worldWidth = configManager.getFloat("worldWidth");
+        final float minRatio = configManager.getFloat("minRatio");
+        final float maxRatio = configManager.getFloat("maxRatio");
+        final float minWorldHeight = worldWidth / maxRatio;
+        final float maxWorldHeight = worldWidth / minRatio;
+
+        createWorldViewport(worldWidth, minWorldHeight, maxWorldHeight);
+        createUiViewport(worldWidth, minWorldHeight, maxWorldHeight);
+
         Gdx.input.setInputProcessor(stage);
+
+        uiRootTable = new Table();
+        uiRootTable.setFillParent(true);
+        stage.addActor(uiRootTable);
     }
 
     @Override
@@ -50,22 +68,20 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
+        viewport.update(width, height, true);
+        uiViewport.update(width, height, true);
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     protected void update(float delta) {
@@ -78,15 +94,18 @@ public abstract class AbstractScreen implements Screen {
         stage.draw();
     }
 
-    private Viewport createViewport() {
-        ConfigManager configManager = AbstractFactory.instance.configManager();
-        float worldWidth = configManager.getFloat("worldWidth");
-        float minRatio = configManager.getFloat("minRatio");
-        float maxRatio = configManager.getFloat("maxRatio");
-        return new ExtendViewport(
-                worldWidth, worldWidth / maxRatio,
-                worldWidth, worldWidth / minRatio,
-                camera);
+    private void createWorldViewport(float worldWidth, float minWorldHeight, float maxWorldHeight) {
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        viewport = new ExtendViewport(worldWidth, minWorldHeight, worldWidth, maxWorldHeight, camera);
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+    }
+
+    private void createUiViewport(float worldWidth, float minWorldHeight, float maxWorldHeight) {
+        uiCamera = new OrthographicCamera();
+        uiCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        uiViewport = new ExtendViewport(worldWidth, minWorldHeight, worldWidth, maxWorldHeight, uiCamera);
+        stage = new Stage(uiViewport, batch);
     }
 
     @Override

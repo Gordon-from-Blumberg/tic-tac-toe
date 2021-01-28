@@ -1,6 +1,9 @@
 package com.gordonfromblumberg.games.common.screens;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.gordonfromblumberg.games.common.factory.AbstractFactory;
 import com.gordonfromblumberg.games.common.model.GameWorld;
+import com.gordonfromblumberg.games.common.utils.ConfigManager;
 
 public class GameScreen extends AbstractScreen {
 
@@ -11,18 +14,21 @@ public class GameScreen extends AbstractScreen {
         super.show();
 
         gameWorld = new GameWorld(viewport);
+
+        createUI();
     }
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, false);
+        viewport.update(width, height, false);
+        uiViewport.update(width, height, true);
     }
 
     @Override
     protected void update(float delta) {
-        gameWorld.update(delta);        // update game state
-        camera.translate(0, 0);   // move camera if needed
+        camera.translate(0, 0);         // move camera if needed
         super.update(delta);            // apply camera moving and update batch projection matrix
+        gameWorld.update(delta);        // update game state
     }
 
     @Override
@@ -35,5 +41,12 @@ public class GameScreen extends AbstractScreen {
         gameWorld.dispose();
 
         super.dispose();
+    }
+
+    private void createUI() {
+        final ConfigManager configManager = AbstractFactory.instance.configManager();
+        final Skin uiSkin = assets.get("ui/uiskin.json", Skin.class);
+
+        // create ui here
     }
 }

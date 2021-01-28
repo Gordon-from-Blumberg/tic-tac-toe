@@ -13,7 +13,6 @@ import com.gordonfromblumberg.games.common.Main;
 public class MainMenuScreen extends AbstractScreen {
 
     TextureRegion background;
-    Table rootTable;
     TextButton textButton;
 
     @Override
@@ -21,12 +20,9 @@ public class MainMenuScreen extends AbstractScreen {
         super.show();
 
         final AssetManager assetManager = Main.getInstance().assets();
-        background = assetManager.get("image/texture_pack.atlas", TextureAtlas.class).findRegion("//todo");//todo
-        rootTable = new Table();
-        rootTable.setFillParent(true);
-        stage.addActor(rootTable);
+        background = assetManager.get("image/texture_pack.atlas", TextureAtlas.class).findRegion("bg");
 
-        Skin uiSkin = assetManager.get("ui/uiskin.json", Skin.class);
+        final Skin uiSkin = assets.get("ui/uiskin.json", Skin.class);
 
         textButton = new TextButton("PLAY", uiSkin);
         textButton.addListener(new ClickListener() {
@@ -35,7 +31,7 @@ public class MainMenuScreen extends AbstractScreen {
                 Main.getInstance().setScreen(new GameScreen());
             }
         });
-        rootTable.add(textButton);
+        uiRootTable.add(textButton);
     }
 
     @Override
