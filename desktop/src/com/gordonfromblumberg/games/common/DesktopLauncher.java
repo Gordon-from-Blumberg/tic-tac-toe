@@ -15,6 +15,6 @@ public class DesktopLauncher {
 		config.title = "game_template";
 		config.width = configManager.getInteger("screenWidth");
 		config.height = configManager.getInteger("screenHeight");
-		new LwjglApplication(Main.create(factory), config);
+		new LwjglApplication(Main.createInstance(), config);
 	}
 }

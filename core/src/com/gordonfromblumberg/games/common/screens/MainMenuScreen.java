@@ -1,11 +1,11 @@
 package com.gordonfromblumberg.games.common.screens;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.gordonfromblumberg.games.common.Main;
@@ -14,6 +14,10 @@ public class MainMenuScreen extends AbstractScreen {
 
     TextureRegion background;
     TextButton textButton;
+
+    public MainMenuScreen(SpriteBatch batch) {
+        super(batch);
+    }
 
     @Override
     public void show() {
@@ -28,7 +32,7 @@ public class MainMenuScreen extends AbstractScreen {
         textButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Main.getInstance().setScreen(new GameScreen());
+                Main.getInstance().setScreen(new GameScreen(batch));
             }
         });
         uiRootTable.add(textButton);

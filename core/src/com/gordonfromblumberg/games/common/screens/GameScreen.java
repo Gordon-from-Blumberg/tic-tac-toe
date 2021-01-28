@@ -1,5 +1,6 @@
 package com.gordonfromblumberg.games.common.screens;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.gordonfromblumberg.games.common.factory.AbstractFactory;
 import com.gordonfromblumberg.games.common.model.GameWorld;
@@ -8,6 +9,10 @@ import com.gordonfromblumberg.games.common.utils.ConfigManager;
 public class GameScreen extends AbstractScreen {
 
     private GameWorld gameWorld;
+
+    protected GameScreen(SpriteBatch batch) {
+        super(batch);
+    }
 
     @Override
     public void show() {

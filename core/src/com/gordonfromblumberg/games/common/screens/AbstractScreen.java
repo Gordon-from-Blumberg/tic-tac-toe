@@ -20,18 +20,21 @@ public abstract class AbstractScreen implements Screen {
 
     protected AssetManager assets;
 
+    protected final SpriteBatch batch;
+
     protected Stage stage;
-    protected SpriteBatch batch;
     protected Viewport viewport, uiViewport;
     protected OrthographicCamera camera, uiCamera;
 
     protected Table uiRootTable;
 
+    protected AbstractScreen(SpriteBatch batch) {
+        this.batch = batch;
+    }
+
     @Override
     public void show() {
         assets = Main.getInstance().assets();
-
-        batch = new SpriteBatch();
 
         final ConfigManager configManager = AbstractFactory.instance.configManager();
         final float worldWidth = configManager.getFloat("worldWidth");
@@ -111,6 +114,5 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        batch.dispose();
     }
 }

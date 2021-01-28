@@ -2,9 +2,9 @@ package com.gordonfromblumberg.games.common;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.gordonfromblumberg.games.common.factory.AbstractFactory;
 import com.gordonfromblumberg.games.common.screens.AbstractScreen;
 import com.gordonfromblumberg.games.common.screens.MainMenuScreen;
 import com.gordonfromblumberg.games.common.utils.JsonConfigLoader;
@@ -17,11 +17,12 @@ public class Main extends Game {
 	public static final String NAME = "game_template";
 
 	private final AssetManager assetManager;
-	private final AbstractFactory factory;
-	private final MainMenuScreen mainMenuScreen;
 
-	public static Main create(AbstractFactory factory) {
-		instance = new Main(factory);
+	private SpriteBatch batch;
+	private MainMenuScreen mainMenuScreen;
+
+	public static Main createInstance() {
+		instance = new Main();
 		return instance;
 	}
 
@@ -29,12 +30,9 @@ public class Main extends Game {
 		return instance;
 	}
 
-	private Main(AbstractFactory factory) {
+	private Main() {
 		this.assetManager = new AssetManager();
 //		setJsonConfigLoader(class, function);
-
-		this.factory = factory;
-	    this.mainMenuScreen = new MainMenuScreen();
     }
 	
 	@Override
@@ -43,7 +41,8 @@ public class Main extends Game {
 		loadUiAssets();
 
 		assetManager.finishLoading();
-
+		this.batch = new SpriteBatch();
+		this.mainMenuScreen = new MainMenuScreen(batch);
 		setScreen(mainMenuScreen);
 	}
 
