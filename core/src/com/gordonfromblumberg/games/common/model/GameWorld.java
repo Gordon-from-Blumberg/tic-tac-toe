@@ -2,6 +2,7 @@ package com.gordonfromblumberg.games.common.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -17,8 +18,9 @@ import java.util.Iterator;
 
 public class GameWorld implements Disposable {
 
-    private Viewport viewport;
+    private final Viewport viewport;
     private final Array<GameObject> gameObjects = new Array<>();
+
     private final BSPTree tree;
 
     public Rectangle visibleArea;
@@ -53,12 +55,13 @@ public class GameWorld implements Disposable {
 
         for (GameObject gameObject : gameObjects) {
             gameObject.update(delta);
-            if (gameObject.active) {
+            if (gameObject.active && gameObject.colliding) {
                 tree.addObject(gameObject);
             }
         }
 
         detectCollisions();
+        processCollisions();
 
         if (time > 2) {
             time = 0;
@@ -110,16 +113,32 @@ public class GameWorld implements Disposable {
                 final GameObject gameObject = iterator.next();
                 if (!gameObject.active) continue;
 
-                while(internalIterator.hasNext()) {
+                while (internalIterator.hasNext()) {
                     final GameObject internalGameObject = internalIterator.next();
                     if (!internalGameObject.active) continue;
 
-                    if (gameObject.getBoundingRectangle().overlaps(internalGameObject.getBoundingRectangle())
-                            && gameObject.checkCollision(internalGameObject)) {
-                        gameObject.collide(internalGameObject);
-                    }
+                    Collision collision = detectCollision(gameObject, internalGameObject);
+                    if (collision != null)
+                        collisionQueue.add(collision);
                 }
             }
+        }
+    }
+
+    private Collision detectCollision(GameObject obj1, GameObject obj2) {
+        if (!obj1.getBoundingRectangle().overlaps(obj2.getBoundingRectangle())
+                || !Intersector.intersectPolygons(obj1.getPolygon(), obj2.getPolygon(), null)) {
+            return null;
+        }
+
+        return collisionPool.obtain();
+    }
+
+    private void processCollisions() {
+        while (collisionQueue.size() != 0) {
+            Collision collision = collisionQueue.poll();
+            // processing...
+            collisionPool.free(collision);
         }
     }
 
@@ -132,7 +151,7 @@ public class GameWorld implements Disposable {
 
     private <T extends Disposable> void dispose(Pool<T> pool) {
         int free = pool.getFree();
-        while(free-- > 0) {
+        while (free-- > 0) {
             pool.obtain().dispose();
         }
     }
