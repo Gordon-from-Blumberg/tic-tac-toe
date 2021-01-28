@@ -22,6 +22,10 @@ public class GameObject implements Disposable, Pool.Poolable {
     protected static final int X4 = 6;
     protected static final int Y4 = 7;
 
+    protected static int nextId = 1;
+
+    protected int id;
+
     public GameWorld gameWorld;
 
     protected final Sprite sprite = new Sprite();
@@ -33,18 +37,7 @@ public class GameObject implements Disposable, Pool.Poolable {
     protected boolean active = false;
     protected boolean colliding = false;
 
-    protected GameObject() {}
-
-    protected GameObject(String textureName) {
-        setRegion(textureName);
-    }
-
-    protected GameObject(Pool<GameObject> pool) {
-        this.pool = pool;
-    }
-
-    public void update(float delta) {
-    }
+    public void update(float delta) {}
 
     public void render(Batch batch) {
         final Sprite sprite = this.sprite;
@@ -88,15 +81,17 @@ public class GameObject implements Disposable, Pool.Poolable {
     protected void updateVertices() {
         final float width = this.width;
         final float height = this.height;
+
+        // for correct work of Intersector vertices should be clockwise ordered
         final float[] vertices = polygon.getVertices();
         vertices[X1] = - width / 2;
         vertices[Y1] = - height / 2;
-        vertices[X2] = width / 2;
-        vertices[Y2] = - height / 2;
+        vertices[X2] = - width / 2;
+        vertices[Y2] = height / 2;
         vertices[X3] = width / 2;
         vertices[Y3] = height / 2;
-        vertices[X4] = - width / 2;
-        vertices[Y4] = height / 2;
+        vertices[X4] = width / 2;
+        vertices[Y4] = - height / 2;
     }
 
     public float getWidth() {
@@ -119,6 +114,16 @@ public class GameObject implements Disposable, Pool.Poolable {
         sprite.setRegion(getTextureAtlas().findRegion(name));
     }
 
+    public void free() {
+        if (pool != null)
+            pool.free(this);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s#%d", getClass().getSimpleName(), id);
+    }
+
     @Override
     public void reset() {
         setPosition(0, 0);
@@ -128,6 +133,5 @@ public class GameObject implements Disposable, Pool.Poolable {
 
     @Override
     public void dispose() {
-
     }
 }

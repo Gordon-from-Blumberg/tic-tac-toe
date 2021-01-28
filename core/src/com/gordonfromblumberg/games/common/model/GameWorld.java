@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import com.gordonfromblumberg.games.common.Main;
+import com.gordonfromblumberg.games.common.event.EventProcessor;
 import com.gordonfromblumberg.games.common.screens.AbstractScreen;
 import com.gordonfromblumberg.games.common.utils.BSPTree;
 
@@ -22,6 +23,7 @@ public class GameWorld implements Disposable {
     private final Array<GameObject> gameObjects = new Array<>();
 
     private final BSPTree tree;
+    private final EventProcessor eventProcessor = new EventProcessor();
 
     public Rectangle visibleArea;
 
@@ -40,6 +42,7 @@ public class GameWorld implements Disposable {
         gameObjects.add(gameObject);
         gameObject.setGameWorld(this);
         gameObject.active = true;
+        gameObject.id = GameObject.nextId++;
         if (gameObjects.size > maxCount) maxCount = gameObjects.size;
     }
 
@@ -62,7 +65,8 @@ public class GameWorld implements Disposable {
         }
 
         detectCollisions();
-        processCollisions();
+
+        eventProcessor.process();
 
         if (time > 2) {
             time = 0;
@@ -122,29 +126,17 @@ public class GameWorld implements Disposable {
                     final GameObject internalGameObject = internalIterator.next();
                     if (!internalGameObject.active) continue;
 
-                    Collision collision = detectCollision(gameObject, internalGameObject);
-                    if (collision != null)
-                        collisionQueue.add(collision);
+                    if (detectCollision(gameObject, internalGameObject)) {
+                       // handle collision
+                    }
                 }
             }
         }
     }
 
-    private Collision detectCollision(GameObject obj1, GameObject obj2) {
-        if (!obj1.getBoundingRectangle().overlaps(obj2.getBoundingRectangle())
-                || !Intersector.intersectPolygons(obj1.getPolygon(), obj2.getPolygon(), null)) {
-            return null;
-        }
-
-        return collisionPool.obtain();
-    }
-
-    private void processCollisions() {
-        while (collisionQueue.size() != 0) {
-            Collision collision = collisionQueue.poll();
-            // processing...
-            collisionPool.free(collision);
-        }
+    private boolean detectCollision(GameObject obj1, GameObject obj2) {
+        return obj1.getBoundingRectangle().overlaps(obj2.getBoundingRectangle())
+                && Intersector.intersectPolygons(obj1.getPolygon(), obj2.getPolygon(), null);
     }
 
     @Override

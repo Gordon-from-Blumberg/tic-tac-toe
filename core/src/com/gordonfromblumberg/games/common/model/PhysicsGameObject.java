@@ -3,9 +3,6 @@ package com.gordonfromblumberg.games.common.model;
 import com.badlogic.gdx.math.Vector2;
 
 public class PhysicsGameObject extends GameObject {
-    protected static final float MAX_VELOCITY = 1000f;
-    protected static final float MAX_ACCELERATION = 1000f;
-
     public final Vector2 velocity = new Vector2();
     public final Vector2 acceleration = new Vector2();
 
@@ -18,9 +15,6 @@ public class PhysicsGameObject extends GameObject {
     protected float maxAcceleration, maxDeceleration;
 
     {
-//        setMaxVelocity(MAX_VELOCITY);
-//        setMaxAcceleration(MAX_ACCELERATION);
-//        setMaxDeceleration(MAX_ACCELERATION);
         this.colliding = true;
     }
 
