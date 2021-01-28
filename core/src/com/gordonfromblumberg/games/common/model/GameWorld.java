@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import com.gordonfromblumberg.games.common.Main;
+import com.gordonfromblumberg.games.common.event.Event;
 import com.gordonfromblumberg.games.common.event.EventProcessor;
 import com.gordonfromblumberg.games.common.screens.AbstractScreen;
 import com.gordonfromblumberg.games.common.utils.BSPTree;
@@ -114,20 +115,26 @@ public class GameWorld implements Disposable {
         return score;
     }
 
+    public void pushEvent(Event event) {
+        eventProcessor.push(event);
+    }
+
     private void detectCollisions() {
         while (tree.hasNext()) {
             final Iterator<GameObject> iterator = tree.next();
             final Iterator<GameObject> internalIterator = tree.internalIterator();
             while (iterator.hasNext()) {
                 final GameObject gameObject = iterator.next();
-                if (!gameObject.active) continue;
+                if (!gameObject.active)
+                    continue;
 
                 while (internalIterator.hasNext()) {
                     final GameObject internalGameObject = internalIterator.next();
-                    if (!internalGameObject.active) continue;
+                    if (!internalGameObject.active)
+                        continue;
 
                     if (detectCollision(gameObject, internalGameObject)) {
-                       // handle collision
+                        gameObject.collide(internalGameObject);
                     }
                 }
             }

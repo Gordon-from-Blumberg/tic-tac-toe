@@ -115,6 +115,9 @@ public class GameObject implements Disposable, Pool.Poolable {
         sprite.setRegion(getTextureAtlas().findRegion(name));
     }
 
+    public void collide(GameObject other) {
+    }
+
     public void free() {
         if (pool != null)
             pool.free(this);
