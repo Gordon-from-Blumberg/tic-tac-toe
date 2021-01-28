@@ -52,8 +52,8 @@ public class GameObject implements Disposable, Pool.Poolable {
         final float width = this.width;
         final float height = this.height;
         sprite.setRotation(polygon.getRotation());
-        sprite.setOriginCenter();
         sprite.setBounds(polygon.getX() - width / 2, polygon.getY() - height / 2, width, height);
+        sprite.setOriginCenter();
         sprite.draw(batch);
     }
 
