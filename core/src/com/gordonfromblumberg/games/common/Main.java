@@ -7,6 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.gordonfromblumberg.games.common.factory.AbstractFactory;
 import com.gordonfromblumberg.games.common.screens.AbstractScreen;
 import com.gordonfromblumberg.games.common.screens.MainMenuScreen;
+import com.gordonfromblumberg.games.common.utils.JsonConfigLoader;
+
+import java.util.function.Consumer;
 
 public class Main extends Game {
 	private static Main instance;
@@ -28,6 +31,8 @@ public class Main extends Game {
 
 	private Main(AbstractFactory factory) {
 		this.assetManager = new AssetManager();
+//		setJsonConfigLoader(class, function);
+
 		this.factory = factory;
 	    this.mainMenuScreen = new MainMenuScreen();
     }
@@ -52,6 +57,16 @@ public class Main extends Game {
 
     public AssetManager assets() {
 		return assetManager;
+	}
+
+	/**
+	 * Adds custom json loader to asset manager
+	 * @param type To this class json data will be mapped
+	 * @param onLoadHandler This function will be invoked after loading has finished. May be null.
+	 * @param <T> Class of config
+	 */
+	private <T> void setJsonConfigLoader(Class<T> type, Consumer<T> onLoadHandler) {
+		assetManager.setLoader(type, new JsonConfigLoader<>(assetManager.getFileHandleResolver(), type, onLoadHandler));
 	}
 
 	private void loadUiAssets() {

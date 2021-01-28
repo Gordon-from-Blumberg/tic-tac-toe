@@ -1,8 +1,5 @@
 package com.gordonfromblumberg.games.common.screens;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
-import com.gordonfromblumberg.games.common.Main;
 import com.gordonfromblumberg.games.common.model.GameWorld;
 
 public class GameScreen extends AbstractScreen {
@@ -23,9 +20,9 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     protected void update(float delta) {
-        gameWorld.update(delta);
-        camera.translate(0, gameWorld.speedY * delta);
-        super.update(delta);
+        gameWorld.update(delta);        // update game state
+        camera.translate(0, 0);   // move camera if needed
+        super.update(delta);            // apply camera moving and update batch projection matrix
     }
 
     @Override
