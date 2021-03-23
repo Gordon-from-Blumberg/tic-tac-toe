@@ -1,8 +1,8 @@
 package com.gordonfromblumberg.game_template.desktop.factory;
 
-import com.gordonfromblumberg.game_template.desktop.utils.DesktopConfigManager;
-import com.gordonfromblumberg.game_template.factory.AbstractFactory;
-import com.gordonfromblumberg.game_template.utils.ConfigManager;
+import com.gordonfromblumberg.games.common.utils.DesktopConfigManager;
+import com.gordonfromblumberg.games.common.factory.AbstractFactory;
+import com.gordonfromblumberg.games.common.utils.ConfigManager;
 
 public class DesktopFactory extends AbstractFactory {
     public DesktopFactory() {

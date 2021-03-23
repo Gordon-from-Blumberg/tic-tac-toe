@@ -1,4 +1,4 @@
-package com.gordonfromblumberg.games.space_shooter.utils;
+package com.gordonfromblumberg.games.common.utils;
 
 import com.gordonfromblumberg.games.common.utils.ConfigManager;
 

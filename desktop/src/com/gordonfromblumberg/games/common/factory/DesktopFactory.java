@@ -1,7 +1,7 @@
 package com.gordonfromblumberg.games.common.factory;
 
 import com.gordonfromblumberg.games.common.utils.ConfigManager;
-import com.gordonfromblumberg.games.space_shooter.utils.DesktopConfigManager;
+import com.gordonfromblumberg.games.common.utils.DesktopConfigManager;
 
 public class DesktopFactory extends AbstractFactory {
     public DesktopFactory() {
