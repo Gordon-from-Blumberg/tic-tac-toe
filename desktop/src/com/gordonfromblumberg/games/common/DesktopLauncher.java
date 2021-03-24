@@ -12,7 +12,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 //		config.foregroundFPS = 0;
 //		config.vSyncEnabled = false;
-		config.title = "game_template";
+		config.title = Main.NAME;
 		config.width = configManager.getInteger("screenWidth");
 		config.height = configManager.getInteger("screenHeight");
 		new LwjglApplication(Main.createInstance(), config);
