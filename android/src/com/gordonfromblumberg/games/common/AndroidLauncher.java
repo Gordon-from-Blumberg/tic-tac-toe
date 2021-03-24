@@ -1,10 +1,9 @@
-package com.gordonfromblumberg.games.game_template;
+package com.gordonfromblumberg.games.common;
 
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.gordonfromblumberg.games.common.Main;
 import com.gordonfromblumberg.games.common.factory.AndroidFactory;
 
 public class AndroidLauncher extends AndroidApplication {
@@ -14,6 +13,7 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useAccelerometer = false;
 		config.useCompass = false;
-		initialize(Main.create(new AndroidFactory()), config);
+		new AndroidFactory();
+		initialize(Main.createInstance(), config);
 	}
 }
