@@ -125,7 +125,7 @@ public class GameObject implements Disposable, Pool.Poolable {
 
     @Override
     public String toString() {
-        return String.format("%s#%d", getClass().getSimpleName(), id);
+        return getClass().getSimpleName() + "#" + id;
     }
 
     @Override

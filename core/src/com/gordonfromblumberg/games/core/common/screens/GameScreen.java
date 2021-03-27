@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.gordonfromblumberg.games.core.common.factory.AbstractFactory;
 import com.gordonfromblumberg.games.core.common.model.GameWorld;
 import com.gordonfromblumberg.games.core.common.utils.ConfigManager;
+import com.gordonfromblumberg.games.core.common.utils.StringUtils;
 
 public class GameScreen extends AbstractScreen {
     private static final String SCORE_LABEL = "SCORE";
@@ -68,6 +69,6 @@ public class GameScreen extends AbstractScreen {
     }
 
     private String getScore() {
-        return String.format("%s: %06d", SCORE_LABEL, gameWorld.getScore());
+        return SCORE_LABEL + StringUtils.padLeft(gameWorld.getScore(), 6);
     }
 }

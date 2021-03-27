@@ -27,7 +27,7 @@ public class ConfigManager {
                 return Integer.parseInt(property);
             } catch (NumberFormatException e) {
                 throw new RuntimeException(
-                        String.format("Couldn't parse property %s = %s", propertyName, property),
+                        StringUtils.format("Couldn't parse property # = #", propertyName, property),
                         e
                 );
             }
@@ -53,7 +53,7 @@ public class ConfigManager {
                 return Float.parseFloat(property);
             } catch (NumberFormatException e) {
                 throw new RuntimeException(
-                        String.format("Couldn't parse property %s = %s", propertyName, property),
+                        StringUtils.format("Couldn't parse property # = #", propertyName, property),
                         e
                 );
             }
