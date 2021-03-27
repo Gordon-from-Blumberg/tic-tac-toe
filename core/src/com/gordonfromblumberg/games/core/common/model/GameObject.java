@@ -13,6 +13,8 @@ import com.badlogic.gdx.utils.Pool;
 import com.gordonfromblumberg.games.core.common.Main;
 import com.gordonfromblumberg.games.core.common.utils.Pools;
 
+import java.util.function.Supplier;
+
 public class GameObject implements Disposable, Pool.Poolable {
     protected static final int X1 = 0;
     protected static final int Y1 = 1;
@@ -34,9 +36,13 @@ public class GameObject implements Disposable, Pool.Poolable {
     protected final Vector2 position = new Vector2();
     protected float width, height;
 
-    protected Pool pool = Pools.getPool(getClass());
+    protected Pool pool;
     protected boolean active = false;
     protected boolean colliding = false;
+
+    protected <T extends GameObject> GameObject(Supplier<T> constructor) {
+        pool = Pools.getPool((Class<T>) getClass(), constructor);
+    }
 
     public void update(float delta) {}
 

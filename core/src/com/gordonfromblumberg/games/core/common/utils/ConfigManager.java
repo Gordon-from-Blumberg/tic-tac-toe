@@ -6,14 +6,15 @@ import com.gordonfromblumberg.games.core.common.Main;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Properties;
+//import java.util.Properties;
 
+// todo use Map
 public class ConfigManager {
     private static final String DEFAULT_CONFIG_FILE = "config/default-config.properties";
     private static final String CONFIG_FILE = "config/config.properties";
     private static final String CONFIG_PREFERENCE = Main.NAME + ".config";
 
-    protected final Properties configProperties = new Properties();
+//    protected final Properties configProperties = new Properties();
 
     public ConfigManager() {
         loadConfig(DEFAULT_CONFIG_FILE);
@@ -21,7 +22,7 @@ public class ConfigManager {
     }
 
     public int getInteger(String propertyName) {
-        String property = configProperties.getProperty(propertyName);
+        String property = "";//configProperties.getProperty(propertyName);
         if (property != null) {
             try {
                 return Integer.parseInt(property);
@@ -47,7 +48,7 @@ public class ConfigManager {
     }
 
     public float getFloat(String propertyName) {
-        String property = configProperties.getProperty(propertyName);
+        String property = "";//configProperties.getProperty(propertyName);
         if (property != null) {
             try {
                 return Float.parseFloat(property);
@@ -63,7 +64,7 @@ public class ConfigManager {
 
     protected void loadConfig(String configPath) {
         try (Reader reader = Gdx.files.internal(configPath).reader()) {
-            configProperties.load(reader);
+            //configProperties.load(reader);
         } catch (IOException e) {
             throw new RuntimeException("Couldn't load config from " + configPath, e);
         }
