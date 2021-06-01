@@ -16,3 +16,18 @@ echo 'Set user name to Gordon-from-Blumberg'
 git config user.name Gordon-from-Blumberg
 echo 'Set user email to gordon.from.blumberg@gmail.com'
 git config user.email gordon.from.blumberg@gmail.com
+
+echo 'Rename branch master -> template'
+git branch -m master template
+echo 'Create a new branch master and checkout to it'
+git checkout -b master
+
+origin_master=$2
+if [ -z "$origin_master" ]
+    then
+        echo 'Default branch name is not specified -> use master'
+        origin_master=master
+fi
+
+echo "Set current branch master to remote origin/$origin_master"
+git push --set-upstream origin $origin_master
