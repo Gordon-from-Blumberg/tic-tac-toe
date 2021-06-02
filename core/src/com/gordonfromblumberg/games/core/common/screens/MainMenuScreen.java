@@ -1,8 +1,8 @@
 package com.gordonfromblumberg.games.core.common.screens;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -17,6 +17,8 @@ public class MainMenuScreen extends AbstractScreen {
 
     public MainMenuScreen(SpriteBatch batch) {
         super(batch);
+
+        color = Color.FOREST;
     }
 
     @Override
@@ -24,7 +26,7 @@ public class MainMenuScreen extends AbstractScreen {
         super.show();
 
         final AssetManager assetManager = Main.getInstance().assets();
-        background = assetManager.get("image/texture_pack.atlas", TextureAtlas.class).findRegion("bg");
+//        background = assetManager.get("image/texture_pack.atlas", TextureAtlas.class).findRegion("bg");
 
         final Skin uiSkin = assets.get("ui/uiskin.json", Skin.class);
 
@@ -38,10 +40,10 @@ public class MainMenuScreen extends AbstractScreen {
         uiRootTable.add(textButton);
     }
 
-    @Override
-    protected void renderWorld(float delta) {
-        batch.draw(background, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
-    }
+//    @Override
+//    protected void renderWorld(float delta) {
+//        batch.draw(background, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+//    }
 
 //    @Override
 //    public void dispose() {

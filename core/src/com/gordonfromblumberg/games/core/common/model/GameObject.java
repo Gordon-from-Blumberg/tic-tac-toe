@@ -36,12 +36,16 @@ public class GameObject implements Disposable, Pool.Poolable {
     protected final Vector2 position = new Vector2();
     protected float width, height;
 
-    protected Pool pool;
+    protected final Pool pool;
     protected boolean active = false;
     protected boolean colliding = false;
 
-    protected <T extends GameObject> GameObject(Supplier<T> constructor) {
-        pool = Pools.getPool((Class<T>) getClass(), constructor);
+    protected GameObject() {
+        pool = null;
+    }
+
+    protected GameObject(Pool pool) {
+        this.pool = pool;
     }
 
     public void update(float delta) {}
@@ -124,6 +128,7 @@ public class GameObject implements Disposable, Pool.Poolable {
     public void collide(GameObject other) {
     }
 
+    @SuppressWarnings("unchecked")
     public void free() {
         if (pool != null)
             pool.free(this);

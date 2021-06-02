@@ -3,6 +3,7 @@ package com.gordonfromblumberg.games.core.common.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -21,6 +22,7 @@ public abstract class AbstractScreen implements Screen {
     protected AssetManager assets;
 
     protected final SpriteBatch batch;
+    protected Color color = Color.BLACK;
 
     protected Stage stage;
     protected Viewport viewport, uiViewport;
@@ -57,7 +59,7 @@ public abstract class AbstractScreen implements Screen {
     public void render(float delta) {
         delta = Math.min(delta, MIN_DELTA);
 
-        Gdx.gl.glClearColor(0, 0, 0.1f, 1);
+        Gdx.gl.glClearColor(color.r, color.g, color.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         update(delta);
