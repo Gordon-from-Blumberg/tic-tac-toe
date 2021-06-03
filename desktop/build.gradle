@@ -4,7 +4,7 @@ sourceCompatibility = 1.8
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = ["../android/assets", "assets"]
 
-project.ext.mainClassName = "com.gordonfromblumberg.games.core.common.DesktopLauncher"
+project.ext.mainClassName = "com.gordonfromblumberg.games.desktop.common.DesktopLauncher"
 project.ext.assetsDir = new File("../android/assets")
 
 task run(dependsOn: classes, type: JavaExec) {

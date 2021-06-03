@@ -1,12 +1,15 @@
 package com.gordonfromblumberg.games.core.common;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.gordonfromblumberg.games.core.common.factory.AbstractFactory;
 import com.gordonfromblumberg.games.core.common.screens.AbstractScreen;
 import com.gordonfromblumberg.games.core.common.screens.MainMenuScreen;
+import com.gordonfromblumberg.games.core.common.utils.ConfigManager;
 import com.gordonfromblumberg.games.core.common.utils.JsonConfigLoader;
 
 import java.util.function.Consumer;
@@ -17,6 +20,7 @@ public class Main extends Game {
 	public static final String NAME = "game_template";
 
 	private final AssetManager assetManager;
+	private ConfigManager configManager;
 
 	private SpriteBatch batch;
 	private MainMenuScreen mainMenuScreen;
@@ -37,6 +41,9 @@ public class Main extends Game {
 	
 	@Override
 	public void create() {
+		configManager = AbstractFactory.instance.configManager();
+		configManager.init();
+
 	    assetManager.load("image/texture_pack.atlas", TextureAtlas.class);
 		loadUiAssets();
 
@@ -44,6 +51,9 @@ public class Main extends Game {
 		this.batch = new SpriteBatch();
 		this.mainMenuScreen = new MainMenuScreen(batch);
 		setScreen(mainMenuScreen);
+		int width = configManager.getInteger("screenWidth");
+		int height = configManager.getInteger("screenHeight");
+		Gdx.graphics.setWindowedMode(width, height);
 	}
 
 	public AbstractScreen getCurrentScreen() {

@@ -1,18 +1,29 @@
 package com.gordonfromblumberg.games.core.common.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.gordonfromblumberg.games.core.common.Main;
 import com.gordonfromblumberg.games.core.common.factory.AbstractFactory;
 import com.gordonfromblumberg.games.core.common.model.GameWorld;
 import com.gordonfromblumberg.games.core.common.utils.ConfigManager;
 import com.gordonfromblumberg.games.core.common.utils.StringUtils;
 
 public class GameScreen extends AbstractScreen {
-    private static final String SCORE_LABEL = "SCORE";
+    private static final String LABEL = "Mouse on ";
 
-    private Label scoreLabel;
+    TextureRegion background;
+    private Label label;
     private GameWorld gameWorld;
+
+    private final Vector3 coords = new Vector3();
 
     protected GameScreen(SpriteBatch batch) {
         super(batch);
@@ -22,9 +33,23 @@ public class GameScreen extends AbstractScreen {
     public void show() {
         super.show();
 
+        background = Main.getInstance().assets()
+                .get("image/texture_pack.atlas", TextureAtlas.class)
+                .findRegion("background");
+
         gameWorld = new GameWorld(viewport);
 
         createUI();
+
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean scrolled(InputEvent event, float x, float y, float amountX, float amountY) {
+                camera.zoom += amountY * 0.25;
+                if (camera.zoom <= 0)
+                    camera.zoom = 0.25f;
+                return true;
+            }
+        });
     }
 
     @Override
@@ -35,19 +60,28 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     protected void update(float delta) {
-        camera.translate(0, 0);         // move camera if needed
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+            camera.translate(-10, 0);
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+            camera.translate(10, 0);
+        if (Gdx.input.isKeyPressed(Input.Keys.UP))
+            camera.translate(0, 10);
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
+            camera.translate(0, -10);
+
         super.update(delta);            // apply camera moving and update batch projection matrix
         gameWorld.update(delta);        // update game state
     }
 
     @Override
     protected void renderWorld(float delta) {
+        batch.draw(background, 0, 0);
         gameWorld.render(batch);
     }
 
     @Override
     protected void renderUi() {
-        scoreLabel.setText(getScore());
+        label.setText(getScore());
         super.renderUi();
     }
 
@@ -59,16 +93,18 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void createUI() {
-        final ConfigManager configManager = AbstractFactory.instance.configManager();
         final Skin uiSkin = assets.get("ui/uiskin.json", Skin.class);
 
-        scoreLabel = new Label(getScore(), uiSkin);
-        uiRootTable.add(scoreLabel).left();
-
-        // create ui here
+        label = new Label(getScore(), uiSkin);
+        uiRootTable.add(label).left();
+        uiRootTable.row().expand();
+        uiRootTable.add();
     }
 
     private String getScore() {
-        return SCORE_LABEL + StringUtils.padLeft(gameWorld.getScore(), 6);
+        coords.x = Gdx.input.getX();
+        coords.y = Gdx.input.getY();
+        gameWorld.convertScreenToWorld(coords);
+        return String.format("%s %.2f, %.2f", LABEL, coords.x, coords.y);
     }
 }

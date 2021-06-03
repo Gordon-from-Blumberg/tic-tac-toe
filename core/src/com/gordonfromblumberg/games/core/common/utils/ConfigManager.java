@@ -16,6 +16,9 @@ public class ConfigManager {
     protected final ObjectMap<String, String> configProperties = new ObjectMap<>();
 
     public ConfigManager() {
+    }
+
+    public void init() {
         loadConfig(DEFAULT_CONFIG_FILE);
         loadConfig(CONFIG_FILE);
     }
@@ -65,7 +68,7 @@ public class ConfigManager {
         try (BufferedReader reader = new BufferedReader(Gdx.files.internal(configPath).reader())) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith("#"))
+                if (line.startsWith("#") || line.trim().isEmpty())
                     continue;
 
                 String[] keyAndValue = line.split("=");

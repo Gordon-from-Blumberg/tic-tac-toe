@@ -101,14 +101,14 @@ public abstract class AbstractScreen implements Screen {
 
     private void createWorldViewport(float worldWidth, float minWorldHeight, float maxWorldHeight) {
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.setToOrtho(false);
         viewport = new ExtendViewport(worldWidth, minWorldHeight, worldWidth, maxWorldHeight, camera);
         viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
 
     private void createUiViewport(float worldWidth, float minWorldHeight, float maxWorldHeight) {
         uiCamera = new OrthographicCamera();
-        uiCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        uiCamera.setToOrtho(false);
         uiViewport = new ExtendViewport(worldWidth, minWorldHeight, worldWidth, maxWorldHeight, uiCamera);
         stage = new Stage(uiViewport, batch);
     }
