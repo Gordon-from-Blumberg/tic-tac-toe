@@ -73,8 +73,13 @@ task addSource {
     }
 }
 
-tasks.compileGwt.dependsOn(addSource)
-tasks.draftCompileGwt.dependsOn(addSource)
+task copyConfig(type: Copy) {
+    from 'assets'
+    into '../android/assets'
+}
+
+tasks.compileGwt.dependsOn(addSource, copyConfig)
+tasks.draftCompileGwt.dependsOn(addSource, copyConfig)
 
 sourceCompatibility = 1.8
 sourceSets.main.java.srcDirs = [ "src/" ]

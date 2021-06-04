@@ -105,6 +105,6 @@ public class GameScreen extends AbstractScreen {
         coords.x = Gdx.input.getX();
         coords.y = Gdx.input.getY();
         gameWorld.convertScreenToWorld(coords);
-        return String.format("%s %.2f, %.2f", LABEL, coords.x, coords.y);
+        return StringUtils.format("##, #", LABEL, coords.x, coords.y);
     }
 }

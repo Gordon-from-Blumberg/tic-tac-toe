@@ -4,13 +4,14 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
 import com.gordonfromblumberg.games.core.common.Main;
+import com.gordonfromblumberg.games.html.common.factory.HtmlFactory;
 
 public class HtmlLauncher extends GwtApplication {
 
         // USE THIS CODE FOR A FIXED SIZE APPLICATION
         @Override
         public GwtApplicationConfiguration getConfig () {
-                return new GwtApplicationConfiguration(480, 320);
+                return new GwtApplicationConfiguration(480, 640);
         }
         // END CODE FOR FIXED SIZE APPLICATION
 
@@ -46,6 +47,7 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
+                HtmlFactory.init();
                 return Main.createInstance();
         }
 }

@@ -38,7 +38,7 @@ public abstract class AbstractScreen implements Screen {
     public void show() {
         assets = Main.getInstance().assets();
 
-        final ConfigManager configManager = AbstractFactory.instance.configManager();
+        final ConfigManager configManager = AbstractFactory.getInstance().configManager();
         final float worldWidth = configManager.getFloat("worldWidth");
         final float minRatio = configManager.getFloat("minRatio");
         final float maxRatio = configManager.getFloat("maxRatio");

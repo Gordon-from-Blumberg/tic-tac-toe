@@ -41,7 +41,7 @@ public class Main extends Game {
 	
 	@Override
 	public void create() {
-		configManager = AbstractFactory.instance.configManager();
+		configManager = AbstractFactory.getInstance().configManager();
 		configManager.init();
 
 	    assetManager.load("image/texture_pack.atlas", TextureAtlas.class);
