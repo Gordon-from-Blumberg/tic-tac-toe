@@ -16,6 +16,8 @@ echo 'Set user name to Gordon-from-Blumberg'
 git config user.name Gordon-from-Blumberg
 echo 'Set user email to gordon.from.blumberg@gmail.com'
 git config user.email gordon.from.blumberg@gmail.com
+echo 'Set push.default to upstream'
+git config push.default upstream
 
 echo 'Rename branch master -> template'
 git branch -m master template
