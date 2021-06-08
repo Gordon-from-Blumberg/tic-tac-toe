@@ -11,10 +11,8 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 
 import com.gordonfromblumberg.games.core.common.Main;
-import com.gordonfromblumberg.games.core.common.utils.Pools;
 
-import java.util.function.Supplier;
-
+@SuppressWarnings("rawtypes")
 public class GameObject implements Disposable, Pool.Poolable {
     protected static final int X1 = 0;
     protected static final int Y1 = 1;

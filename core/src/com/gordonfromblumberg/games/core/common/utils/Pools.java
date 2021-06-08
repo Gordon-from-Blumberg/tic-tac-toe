@@ -24,6 +24,19 @@ public class Pools {
         return pool;
     }
 
+    public static <T> Pool<T> getPool(Class<T> type, Function<Pool<T>, T> constructor) {
+        Pool<T> pool = POOL_MAP.get(type);
+        if (pool == null) {
+            pool = new FunPool<>(constructor);
+            POOL_MAP.put(type, pool);
+        }
+        return pool;
+    }
+
+    public static <T> Pool<T> getPool(Class<T> type) {
+        return POOL_MAP.get(type);
+    }
+
     public static <T> T obtain(Class<T> type) {
         return (T) POOL_MAP.get(type).obtain(); // todo check for null
     }

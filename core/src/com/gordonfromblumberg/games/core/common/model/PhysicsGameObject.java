@@ -1,6 +1,7 @@
 package com.gordonfromblumberg.games.core.common.model;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pool;
 import com.gordonfromblumberg.games.core.common.physics.MovingStrategy;
 
 public class PhysicsGameObject extends GameObject {
@@ -11,6 +12,11 @@ public class PhysicsGameObject extends GameObject {
 
     {
         this.colliding = true;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public PhysicsGameObject(Pool pool) {
+        super(pool);
     }
 
     @Override
