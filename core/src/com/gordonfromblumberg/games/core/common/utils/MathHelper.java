@@ -9,4 +9,8 @@ public class MathHelper {
         }
         return Math.signum(n1) == Math.signum(n2);
     }
+
+    public static float smoothStep(float f) {
+        return f * f * (3.0f - 2.0f * f);
+    }
 }
