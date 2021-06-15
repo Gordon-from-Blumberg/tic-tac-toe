@@ -27,6 +27,16 @@ public class SVGPathComposer {
         return this;
     }
 
+    public SVGPathComposer vertTo(float y) {
+        sb.append(" V ").append(round(y));
+        return this;
+    }
+
+    public SVGPathComposer vert(float dy) {
+        sb.append(" v ").append(round(dy));
+        return this;
+    }
+
     public SVGPathComposer cubicTo(float cx1, float cy1, float cx2, float cy2, float x, float y) {
         sb.append(" C ");
         append(cx1, cy1);
@@ -82,13 +92,9 @@ public class SVGPathComposer {
     }
 
     private float round(float value, int precision) {
-        int n = precision;
-        while (n-- > 0)
-            value *= 10;
-        value = (float) Math.round(value);
-        n = precision;
-        while (n-- > 0)
-            value /= 10;
-        return value;
+        int koef = 1;
+        while (precision-- > 0)
+            koef *= 10;
+        return (float) Math.round(koef * value) / koef;
     }
 }
