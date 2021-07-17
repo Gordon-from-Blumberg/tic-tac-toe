@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+version '1.0'
+
+sourceCompatibility = 1.8
+project.ext.mainClassName = "com.gordonfromblumberg.games.tictactoecli.Main"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(":tic-tac-toe-core")
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': project.mainClassName
+    }
+    from {
+        configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

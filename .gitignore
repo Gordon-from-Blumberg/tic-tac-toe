@@ -66,6 +66,8 @@ com_crashlytics_export_strings.xml
 /core/build/
 /desktop/build/
 /html/build/
+/tic-tac-toe-core/build/
+/tic-tac-toe-cli/build/
 /ios/build/
 /ios-moe/build/
 
