@@ -56,7 +56,7 @@ public abstract class AbstractScreen implements Screen {
     }
 
     @Override
-    public void render(float delta) {
+    public final void render(float delta) {
         delta = Math.min(delta, MIN_DELTA);
 
         Gdx.gl.glClearColor(color.r, color.g, color.b, 1);

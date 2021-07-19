@@ -138,10 +138,6 @@ public class Main {
         System.out.println("If you forget cell numbers, print tip.");
     }
 
-    private static String getRandom(String[] array) {
-        return array[RAND.nextInt(array.length)];
-    }
-
     private static void printPossibleMoves(int state) {
         StringBuilder sb = new StringBuilder("Possible moves: ");
         boolean first = true;

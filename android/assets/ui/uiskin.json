@@ -5,7 +5,8 @@
 		"white": { "a": 1, "b": 1, "g": 1, "r": 1 },
 		"red": { "a": 1, "b": 0, "g": 0, "r": 1 },
 		"black": { "a": 1, "b": 0, "g": 0, "r": 0 },
-		"dark-blue": { "r": 0.129, "g": 0, "b": 0.498, "a": 1 }
+		"dark-blue": { "r": 0.129, "g": 0, "b": 0.498, "a": 1 },
+		"gray": { "r": 0.1, "g": 0.1, "b": 0.1, "a": 1 }
 	},
 	"TintedDrawable": {
 		"dialogDim": { "name": "white", "color": { "r": 0, "g": 0, "b": 0, "a": 0.45 } },
@@ -46,7 +47,7 @@
 		"default-vertical": { "parent": "default-vertical" }
 	},
 	"LabelStyle": {
-		"default": { "font": "default-font", "fontColor": "white" }
+		"default": { "font": "default-font", "fontColor": "gray" }
 	},
 	"TextFieldStyle": {
 		"default": { "selection": "selection", "background": "textfield", "font": "default-font", "fontColor": "white", "cursor": "cursor" }
