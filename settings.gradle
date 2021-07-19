@@ -1,2 +1,2 @@
-include 'desktop', 'core', 'tic-tac-toe-core', 'tic-tac-toe-cli'
+include 'android', 'desktop', 'core', 'tic-tac-toe-core', 'tic-tac-toe-cli'
 
