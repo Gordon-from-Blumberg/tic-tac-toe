@@ -5,10 +5,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gordonfromblumberg.games.core.common.Main;
+import com.gordonfromblumberg.games.core.common.actors.CellActor;
 import com.gordonfromblumberg.games.core.common.factory.AbstractFactory;
 import com.gordonfromblumberg.games.tictactoe.Match;
 import com.gordonfromblumberg.games.tictactoe.Texts;
@@ -18,6 +21,7 @@ public class MainMenuScreen extends AbstractScreen {
     TextureRegion grid;
     Label greetingsLabel;
 
+    private final CellActor[] cells = new CellActor[9];
     private Match match;
 
     public MainMenuScreen(SpriteBatch batch) {
@@ -37,14 +41,39 @@ public class MainMenuScreen extends AbstractScreen {
 
         greetingsLabel = new Label(Texts.getText(Texts.GREETING), uiSkin.get(Label.LabelStyle.class));
 
-        uiRootTable.add(greetingsLabel);
+        uiRootTable.add(greetingsLabel).colspan(3);
         uiRootTable.row().expand();
-        uiRootTable.add();
+        uiRootTable.add().colspan(3);
+
+        addCells();
     }
 
     @Override
     protected void renderWorld(float delta) {
         Viewport vp = viewport;
         batch.draw(grid, 0, 0, vp.getWorldWidth(), vp.getWorldWidth());
+    }
+
+    private void addCells() {
+        Viewport vp = viewport;
+        float size = vp.getWorldWidth() / 3;
+        for (int i = 0, n = cells.length; i < n; i++) {
+            if (i % 3 == 0) {
+                uiRootTable.row().height(size);
+            }
+
+            CellActor cell = new CellActor();
+            cells[i] = cell;
+            uiRootTable.add(cell).size(size);
+        }
+    }
+
+    private ClickListener clickListener(int i) {
+        return new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+            }
+        };
     }
 }
