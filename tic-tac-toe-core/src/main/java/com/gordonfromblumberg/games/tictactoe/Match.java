@@ -10,4 +10,10 @@ public class Match {
 
         return TicTacToe.move(state, cell);
     }
+
+    public void reset() {
+        state = 0;
+    }
+
+
 }

@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gordonfromblumberg.games.core.common.Main;
 import com.gordonfromblumberg.games.core.common.actors.CellActor;
 import com.gordonfromblumberg.games.core.common.factory.AbstractFactory;
+import com.gordonfromblumberg.games.tictactoe.IncorrectMoveException;
 import com.gordonfromblumberg.games.tictactoe.Match;
 import com.gordonfromblumberg.games.tictactoe.Texts;
 
@@ -20,6 +21,7 @@ public class MainMenuScreen extends AbstractScreen {
 
     TextureRegion grid;
     Label greetingsLabel;
+    Label errorLabel;
 
     private final CellActor[] cells = new CellActor[9];
     private Match match;
@@ -39,9 +41,13 @@ public class MainMenuScreen extends AbstractScreen {
 
         final Skin uiSkin = assets.get("ui/uiskin.json", Skin.class);
 
-        greetingsLabel = new Label(Texts.getText(Texts.GREETING), uiSkin.get(Label.LabelStyle.class));
-
+        greetingsLabel = new Label(Texts.getText(Texts.GREETING), uiSkin);
         uiRootTable.add(greetingsLabel).colspan(3);
+
+        errorLabel = new Label("ERROR", uiSkin, "default-font", Color.RED);
+        uiRootTable.row();
+        uiRootTable.add(errorLabel).colspan(3);
+
         uiRootTable.row().expand();
         uiRootTable.add().colspan(3);
 
@@ -65,6 +71,7 @@ public class MainMenuScreen extends AbstractScreen {
             CellActor cell = new CellActor();
             cells[i] = cell;
             uiRootTable.add(cell).size(size);
+            cell.addListener(clickListener(i));
         }
     }
 
@@ -72,7 +79,11 @@ public class MainMenuScreen extends AbstractScreen {
         return new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
+                try {
+                    match.move(i);
+                } catch (IncorrectMoveException e) {
+                    e.printStackTrace();
+                }
             }
         };
     }
