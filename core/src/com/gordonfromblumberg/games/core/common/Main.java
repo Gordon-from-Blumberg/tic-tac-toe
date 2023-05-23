@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.gordonfromblumberg.games.core.common.factory.AbstractFactory;
 import com.gordonfromblumberg.games.core.common.screens.AbstractScreen;
-import com.gordonfromblumberg.games.core.common.screens.MainMenuScreen;
+import com.gordonfromblumberg.games.core.common.screens.MainScreen;
 import com.gordonfromblumberg.games.core.common.utils.ConfigManager;
 import com.gordonfromblumberg.games.core.common.utils.JsonConfigLoader;
 
@@ -17,13 +17,13 @@ import java.util.function.Consumer;
 public class Main extends Game {
 	private static Main instance;
 
-	public static final String NAME = "game_template";
+	public static final String NAME = "Tic Tac Toe";
 
 	private final AssetManager assetManager;
 	private ConfigManager configManager;
 
 	private SpriteBatch batch;
-	private MainMenuScreen mainMenuScreen;
+	private MainScreen mainScreen;
 
 	public static Main createInstance() {
 		instance = new Main();
@@ -49,8 +49,8 @@ public class Main extends Game {
 
 		assetManager.finishLoading();
 		this.batch = new SpriteBatch();
-		this.mainMenuScreen = new MainMenuScreen(batch);
-		setScreen(mainMenuScreen);
+		this.mainScreen = new MainScreen(batch);
+		setScreen(mainScreen);
 		int width = configManager.getInteger("screenWidth");
 		int height = configManager.getInteger("screenHeight");
 		Gdx.graphics.setWindowedMode(width, height);
@@ -61,7 +61,7 @@ public class Main extends Game {
 	}
 
 	public void goToMainMenu() {
-	    setScreen(mainMenuScreen);
+	    setScreen(mainScreen);
     }
 
     public AssetManager assets() {

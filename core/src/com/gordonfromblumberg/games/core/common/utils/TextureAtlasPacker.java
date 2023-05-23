@@ -4,6 +4,6 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 
 public class TextureAtlasPacker {
     public static void main(String[] args) {
-        TexturePacker.process("../../core/resources/image", "image", "texture_pack");
+        TexturePacker.process("core/resources/image", "android/assets/image", "texture_pack");
     }
 }
