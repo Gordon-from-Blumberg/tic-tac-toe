@@ -46,7 +46,7 @@ public class Main {
 
     private static final Random RAND = new Random();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         System.out.println(getRandom(GREETINGS));
 
         Map<Integer, Integer> moves = new HashMap<>();
@@ -102,6 +102,8 @@ public class Main {
 
             System.out.println(getRandom(END_OPP_MOVE));
             System.out.println(getRandom(START_MY_MOVE));
+
+            Thread.sleep(750 + RAND.nextInt(1000));
 
             if (!moves.containsKey(state))
                 myMove(state, moves);
