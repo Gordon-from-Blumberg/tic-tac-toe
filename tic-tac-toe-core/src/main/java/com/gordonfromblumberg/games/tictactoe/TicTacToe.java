@@ -33,7 +33,7 @@ public class TicTacToe {
             0b11 << 16
     };
     private static final int EMPTY_CELL = 0b00;
-    public static final int MY_CELL = 0b010101010101010101;
+    private static final int MY_CELL = 0b010101010101010101;
     private static final int OPPONENT_CELL = 0b101010101010101010;
     private static final int[] ALL_LINES = {
             // horizontal
@@ -133,13 +133,21 @@ public class TicTacToe {
         return (CELL_MASK[cell] & state) == EMPTY_CELL;
     }
 
+    public static boolean isMy(int state, int cell) {
+        return (CELL_MASK[cell] & state & MY_CELL) != 0;
+    }
+
     public static String tip() {
         return "|0|1|2|\n" +
                 "|3|4|5|\n" +
                 "|6|7|8|";
     }
 
-    public static boolean checkWin(int state, int sign) {
+    public static boolean checkMyWin(int state) {
+        return checkWin(state, MY_CELL);
+    }
+
+    private static boolean checkWin(int state, int sign) {
         for (int line : ALL_LINES) {
             // mask with bits of the particular sign on the one line
             int winMask = line & sign;

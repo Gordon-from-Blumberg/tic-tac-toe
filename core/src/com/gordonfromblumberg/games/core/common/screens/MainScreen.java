@@ -10,20 +10,32 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.gordonfromblumberg.games.tictactoe.Texts;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 import static com.gordonfromblumberg.games.tictactoe.TicTacToe.*;
 
 public class MainScreen extends AbstractScreen {
+    private static final Random RAND = new Random();
     private static final Color WARNING_COLOR = new Color(1, 0.7f, 0.7f, 1);
     private static final Color DEFAULT_COLOR = new Color(Color.WHITE);
 
-    private Label draws, defeats, currentMatchLabel, currentMoveLabel;
+    private Label drawsLabel, defeatsLabel, currentMatchLabel, currentMoveLabel, message;
     private TextureRegionDrawable emptyCell, xCell, oCell;
     private final Image[] cells = new Image[9];
     private final Listener listener = new Listener();
-    private int state = 0, match = 1, move = 1;
+    private int state = 0, currentMatch = 1, currentMove = 1;
+    private int draws, defeats;
+    private float delay;
+
+
+    private final Map<Integer, Integer> moves = new HashMap<>();
 
     private boolean isPlayerMove = true;
+    private boolean clickToContinue = false;
 
     public MainScreen(SpriteBatch batch) {
         super(batch);
@@ -42,8 +54,45 @@ public class MainScreen extends AbstractScreen {
         uiRootTable.add(createCurrentMatchTable(skin)).pad(3).top().left();
         uiRootTable.add().expandX();
 
+        uiRootTable.row().padTop(10);
+        uiRootTable.add(message = new Label("", skin)).colspan(3).center().height(40);
+
         uiRootTable.row();
         uiRootTable.add(createGameTable(skin)).colspan(3).expand().center();
+
+        message.setText(Texts.getGreeting() + '\n' + Texts.getFirstOppMove());
+
+        stage.addListener(new ClickListener(Input.Buttons.LEFT) {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (clickToContinue) {
+                    endMatch();
+                    clickToContinue = false;
+                }
+            }
+        });
+    }
+
+    void playerMove(int cell) {
+        state = move(state, cell);
+        ++currentMove;
+        if (isDraw(state)) {
+            message.setText(Texts.getDraw() + "\nClick to play again");
+            ++draws;
+            clickToContinue = true;
+        } else {
+            message.setText(Texts.getEndOppMove() + '\n' + Texts.getStartMyMove());
+            delay = 0.75f + RAND.nextFloat();
+        }
+        isPlayerMove = false;
+    }
+
+    void endMatch() {
+        state = 0;
+        currentMove = 1;
+        ++currentMatch;
+        message.setText(Texts.getFirstOppMove());
+        isPlayerMove = true;
     }
 
     Table createGameTable(Skin skin) {
@@ -58,6 +107,46 @@ public class MainScreen extends AbstractScreen {
             table.add(image).pad(5);
         }
         return table;
+    }
+
+    @Override
+    protected void update(float delta) {
+        if (!isPlayerMove) {
+            delay -= delta;
+
+            if (delay <= 0) {
+                if (!moves.containsKey(state))
+                    myMove(state, moves);
+
+                ++currentMove;
+                state = moves.get(state);
+
+                if (checkMyWin(state)) {
+                    message.setText(Texts.getMyWin() + "\nClick to play again");
+                    ++defeats;
+                    clickToContinue = true;
+                }
+                isPlayerMove = true;
+            }
+        }
+
+        drawsLabel.setText(draws);
+        defeatsLabel.setText(defeats);
+        currentMoveLabel.setText(currentMove);
+        currentMatchLabel.setText(currentMatch);
+    }
+
+    @Override
+    protected void renderWorld(float delta) {
+        final int state = this.state;
+        for (int i = 0; i < 9; ++i) {
+            if (isEmpty(state, i))
+                cells[i].setDrawable(emptyCell);
+            else if (isMy(state, i))
+                cells[i].setDrawable(oCell);
+            else
+                cells[i].setDrawable(xCell);
+        }
     }
 
     class Listener extends ClickListener {
@@ -78,11 +167,7 @@ public class MainScreen extends AbstractScreen {
                 return;
             }
 
-            int move = (int) image.getUserObject();
-            image.setDrawable(xCell);
-            state = move(state, move);
-            ++MainScreen.this.move;
-            currentMoveLabel.setText(MainScreen.this.move);
+            playerMove((int) image.getUserObject());
         }
 
         @Override
@@ -116,11 +201,11 @@ public class MainScreen extends AbstractScreen {
 
         table.row();
         table.add("Draws").padRight(pad);
-        table.add(draws = new Label("0", skin));
+        table.add(drawsLabel = new Label("0", skin));
 
         table.row();
         table.add("Defeats").padRight(pad);
-        table.add(defeats = new Label("0", skin));
+        table.add(defeatsLabel = new Label("0", skin));
         return table;
     }
 
